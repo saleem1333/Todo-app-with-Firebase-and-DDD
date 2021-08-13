@@ -26,8 +26,14 @@ class TodoFormCubit extends Cubit<TodoFormState> {
   }
 
 
-  Future<void> save() async{
+  Future<void> create() async{
     await actor.create(state.todo);
+  }
+
+
+  Future<void> update() async{
+    print(state.todo);
+     await actor.update(state.todo);
   }
 
 

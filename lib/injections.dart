@@ -7,12 +7,14 @@ import 'package:my_project/application/todo/watcher/todos_watcher_cubit.dart';
 import 'package:my_project/domain/auth/i_auth_facade.dart';
 import 'package:my_project/domain/todo/todos_repository_facade.dart';
 import 'package:my_project/infrastructure/auth/firebase_auth_facade.dart';
+import 'package:my_project/domain/core/repository.dart';
 import 'package:my_project/infrastructure/todo/todos_repository.dart';
 
 import 'application/auth/auth_cubit.dart';
 import 'application/auth/sign_up_form/cubit/sign_up_form_cubit.dart';
 import 'application/todo/actor/todo_actor_cubit.dart';
 import 'domain/connection_checker/connection_checker.dart';
+import 'domain/todo/todo.dart';
 
 final getIt = GetIt.instance;
 
@@ -25,7 +27,7 @@ void setUp() {
   getIt.registerFactory<SignInFormCubit>(() => SignInFormCubit(getIt<IAuthFacade>()));
   getIt.registerFactory<SignUpFormCubit>(() => SignUpFormCubit(getIt<IAuthFacade>()));
 
-  getIt.registerSingleton<TodosRepositoryFacade>(TodosRepository(getIt<FirebaseFirestore>()));
-  getIt.registerFactory<TodosWatcherCubit>(() => TodosWatcherCubit(getIt<TodosRepositoryFacade>()));
-  getIt.registerFactory(() => TodoActorCubit(getIt<TodosRepositoryFacade>()));
+  getIt.registerSingleton<Repository<Todo>>(TodosRepository(getIt<FirebaseFirestore>()));
+  getIt.registerFactory<TodosWatcherCubit>(() => TodosWatcherCubit(getIt<Repository<Todo>>()));
+  getIt.registerFactory(() => TodoActorCubit(getIt<Repository<Todo>>()));
 }

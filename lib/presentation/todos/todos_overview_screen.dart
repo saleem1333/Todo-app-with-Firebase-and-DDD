@@ -31,7 +31,7 @@ class TodosOverviewScreen extends StatelessWidget {
         body: Body(),
         floatingActionButton: Builder(builder: (context) {
           return FloatingActionButton(child: Icon(Icons.add), onPressed: () {
-            context.read<TodosWatcherCubit>().editingStateWith(Todo.empty());
+            context.read<TodosWatcherCubit>().editingStateWith(Todo.empty(), true);
           }).objectBottomCenter();
         }),
       ),

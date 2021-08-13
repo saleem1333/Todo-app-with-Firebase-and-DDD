@@ -21,10 +21,13 @@ class _$TodosWatcherStateTearOff {
   }
 
   _LoadedSuccess loadedSuccess(
-      {required List<Todo> todos, required Todo? todoEditTarget}) {
+      {required List<Todo> todos,
+      required Todo? todoEditTarget,
+      required bool isCreatingNewTodo}) {
     return _LoadedSuccess(
       todos: todos,
       todoEditTarget: todoEditTarget,
+      isCreatingNewTodo: isCreatingNewTodo,
     );
   }
 
@@ -43,7 +46,8 @@ mixin _$TodosWatcherState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Todo> todos, Todo? todoEditTarget)
+    required TResult Function(
+            List<Todo> todos, Todo? todoEditTarget, bool isCreatingNewTodo)
         loadedSuccess,
     required TResult Function(Failure failure) loadedFailure,
   }) =>
@@ -51,7 +55,9 @@ mixin _$TodosWatcherState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Todo> todos, Todo? todoEditTarget)? loadedSuccess,
+    TResult Function(
+            List<Todo> todos, Todo? todoEditTarget, bool isCreatingNewTodo)?
+        loadedSuccess,
     TResult Function(Failure failure)? loadedFailure,
     required TResult orElse(),
   }) =>
@@ -128,7 +134,8 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Todo> todos, Todo? todoEditTarget)
+    required TResult Function(
+            List<Todo> todos, Todo? todoEditTarget, bool isCreatingNewTodo)
         loadedSuccess,
     required TResult Function(Failure failure) loadedFailure,
   }) {
@@ -139,7 +146,9 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Todo> todos, Todo? todoEditTarget)? loadedSuccess,
+    TResult Function(
+            List<Todo> todos, Todo? todoEditTarget, bool isCreatingNewTodo)?
+        loadedSuccess,
     TResult Function(Failure failure)? loadedFailure,
     required TResult orElse(),
   }) {
@@ -183,7 +192,7 @@ abstract class _$LoadedSuccessCopyWith<$Res> {
   factory _$LoadedSuccessCopyWith(
           _LoadedSuccess value, $Res Function(_LoadedSuccess) then) =
       __$LoadedSuccessCopyWithImpl<$Res>;
-  $Res call({List<Todo> todos, Todo? todoEditTarget});
+  $Res call({List<Todo> todos, Todo? todoEditTarget, bool isCreatingNewTodo});
 
   $TodoCopyWith<$Res>? get todoEditTarget;
 }
@@ -203,6 +212,7 @@ class __$LoadedSuccessCopyWithImpl<$Res>
   $Res call({
     Object? todos = freezed,
     Object? todoEditTarget = freezed,
+    Object? isCreatingNewTodo = freezed,
   }) {
     return _then(_LoadedSuccess(
       todos: todos == freezed
@@ -213,6 +223,10 @@ class __$LoadedSuccessCopyWithImpl<$Res>
           ? _value.todoEditTarget
           : todoEditTarget // ignore: cast_nullable_to_non_nullable
               as Todo?,
+      isCreatingNewTodo: isCreatingNewTodo == freezed
+          ? _value.isCreatingNewTodo
+          : isCreatingNewTodo // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -231,16 +245,21 @@ class __$LoadedSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadedSuccess implements _LoadedSuccess {
-  const _$_LoadedSuccess({required this.todos, required this.todoEditTarget});
+  const _$_LoadedSuccess(
+      {required this.todos,
+      required this.todoEditTarget,
+      required this.isCreatingNewTodo});
 
   @override
   final List<Todo> todos;
   @override
   final Todo? todoEditTarget;
+  @override
+  final bool isCreatingNewTodo;
 
   @override
   String toString() {
-    return 'TodosWatcherState.loadedSuccess(todos: $todos, todoEditTarget: $todoEditTarget)';
+    return 'TodosWatcherState.loadedSuccess(todos: $todos, todoEditTarget: $todoEditTarget, isCreatingNewTodo: $isCreatingNewTodo)';
   }
 
   @override
@@ -251,14 +270,18 @@ class _$_LoadedSuccess implements _LoadedSuccess {
                 const DeepCollectionEquality().equals(other.todos, todos)) &&
             (identical(other.todoEditTarget, todoEditTarget) ||
                 const DeepCollectionEquality()
-                    .equals(other.todoEditTarget, todoEditTarget)));
+                    .equals(other.todoEditTarget, todoEditTarget)) &&
+            (identical(other.isCreatingNewTodo, isCreatingNewTodo) ||
+                const DeepCollectionEquality()
+                    .equals(other.isCreatingNewTodo, isCreatingNewTodo)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(todos) ^
-      const DeepCollectionEquality().hash(todoEditTarget);
+      const DeepCollectionEquality().hash(todoEditTarget) ^
+      const DeepCollectionEquality().hash(isCreatingNewTodo);
 
   @JsonKey(ignore: true)
   @override
@@ -269,23 +292,26 @@ class _$_LoadedSuccess implements _LoadedSuccess {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Todo> todos, Todo? todoEditTarget)
+    required TResult Function(
+            List<Todo> todos, Todo? todoEditTarget, bool isCreatingNewTodo)
         loadedSuccess,
     required TResult Function(Failure failure) loadedFailure,
   }) {
-    return loadedSuccess(todos, todoEditTarget);
+    return loadedSuccess(todos, todoEditTarget, isCreatingNewTodo);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Todo> todos, Todo? todoEditTarget)? loadedSuccess,
+    TResult Function(
+            List<Todo> todos, Todo? todoEditTarget, bool isCreatingNewTodo)?
+        loadedSuccess,
     TResult Function(Failure failure)? loadedFailure,
     required TResult orElse(),
   }) {
     if (loadedSuccess != null) {
-      return loadedSuccess(todos, todoEditTarget);
+      return loadedSuccess(todos, todoEditTarget, isCreatingNewTodo);
     }
     return orElse();
   }
@@ -318,10 +344,12 @@ class _$_LoadedSuccess implements _LoadedSuccess {
 abstract class _LoadedSuccess implements TodosWatcherState {
   const factory _LoadedSuccess(
       {required List<Todo> todos,
-      required Todo? todoEditTarget}) = _$_LoadedSuccess;
+      required Todo? todoEditTarget,
+      required bool isCreatingNewTodo}) = _$_LoadedSuccess;
 
   List<Todo> get todos => throw _privateConstructorUsedError;
   Todo? get todoEditTarget => throw _privateConstructorUsedError;
+  bool get isCreatingNewTodo => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadedSuccessCopyWith<_LoadedSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -393,7 +421,8 @@ class _$_LoadedFailure implements _LoadedFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Todo> todos, Todo? todoEditTarget)
+    required TResult Function(
+            List<Todo> todos, Todo? todoEditTarget, bool isCreatingNewTodo)
         loadedSuccess,
     required TResult Function(Failure failure) loadedFailure,
   }) {
@@ -404,7 +433,9 @@ class _$_LoadedFailure implements _LoadedFailure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Todo> todos, Todo? todoEditTarget)? loadedSuccess,
+    TResult Function(
+            List<Todo> todos, Todo? todoEditTarget, bool isCreatingNewTodo)?
+        loadedSuccess,
     TResult Function(Failure failure)? loadedFailure,
     required TResult orElse(),
   }) {
